@@ -1,19 +1,35 @@
 #include <REGX52.h>
-sbit LED_PIN = P1^0;
-void Delay_ms(int t){
-	unsigned int i,x;
-	for(i = 0;i<t;i++)
+#include "lib.h"
+#define LED_ON_TIME 21600 // 6 hours
+#define LED_OFF_TIME 64800 // 18 hours
+#define ON 1
+#define OFF 0
+sbit LED_PIN = P1 ^ 0;
+void delaySecond(int time)
+{
+	unsigned int t = 0;
+	for(t = 0; t < time; t++)
 	{
-		for(x = 0;x<123;x++)
-		{
-		}
+		delayMiliSecond(1000);
+	}
 }
+void turnOnLED()
+{
+	LED_PIN = ON;
 }
+void turnOffLED()
+{
+	LED_PIN = OFF;
+}
+
+
 void main()
 {
-		while(1)
-		{
-			LED_PIN = !LED_PIN;
-			Delay_ms(2000);
-		}
+	while (1)
+	{
+		turnOnLED();
+		delaySecond(LED_ON_TIME);
+		turnOffLED();
+		delaySecond(LED_OFF_TIME);
+	}
 }
